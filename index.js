@@ -19,7 +19,7 @@ async function main(){
         if (process.env.GITHUB_EVENT_NAME.includes("pull_request")){
             console.log ("PR event detected");
 
-            var prName = await prHandler.getPrTitle();
+            var [prName, prBody] = await prHandler.getPrInfo();
 
             if (prName === undefined) {
                 console.log("Couldn't read PR name properly, ending checks");
@@ -34,7 +34,7 @@ async function main(){
                     return;
             }
 
-            var workItemId = prHandler.getWorkItemIdFromPrTitle(prName);
+            var workItemId = prHandler.getWorkItemIdFromPrBody(prBody);
 
             try {
                 if ((await prHandler.isPrOpen()) === true) {
@@ -73,7 +73,7 @@ async function main(){
                 return;
             }
 
-            var workItemId = branchHandler.getWorkItemIdFromBranchTitle(branchName);
+            var workItemId = branchHandler.getWorkItemIdFromPrBody(branchName);
             
             try {
                 var updated = await branchHandler.handleOpenedBranch(workItemId);

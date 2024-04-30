@@ -2,11 +2,11 @@ const prhandler = require('../handlers/prHandler');
 
 
 test('Fetching the work item number from PR title', () => {
-    expect(prhandler.getWorkItemIdFromPrTitle("AB#8790 sending email notifications to participants about the event")).toBe("8790");
+    expect(prhandler.getWorkItemIdFromPrBody("AB#8790 sending email notifications to participants about the event")).toBe("8790");
 });
 
 test('Getting PR title', async () => {
-    var prTitle = await prhandler.getPrTitle();
+    var prTitle = await prhandler.getPrInfo();
     expect(prTitle).toBe("AB#8790 sending email notifications to participants about the event");
 });
 

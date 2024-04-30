@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 const staticFunctions = require('../staticFunctions');
 const azureDevOpsHandler = require('./azureDevOpsHandler');
 
-async function getPrTitle() {
+async function getPrInfo() {
     try {
         const requestUrl = "https://api.github.com/repos/"+process.env.ghrepo_owner+"/"+process.env.ghrepo+"/pulls/"+process.env.pull_number;
         console.log(process.env.pull_number)
@@ -17,15 +17,15 @@ async function getPrTitle() {
 
         const jsonResponse = await fetchResponse.json();
 
-        return jsonResponse.title;
+        return [jsonResponse.title, jsonResponse.body];
     } catch (err) {
         console.log("Couldn't obtain PR title for PR number " + process.env.pull_number);
         core.setFailed(err.toString());
     }
 }
-exports.getPrTitle = getPrTitle;
+exports.getPrInfo = getPrInfo;
 
-function getWorkItemIdFromPrTitle(fullPrTitle) {
+function getWorkItemIdFromPrBody(fullPr) {
     console.log("Full PR Title: " + fullPrTitle)
     try {
         var foundMatches = fullPrTitle.match(/AB#[(0-9)]*/g);
@@ -34,11 +34,11 @@ function getWorkItemIdFromPrTitle(fullPrTitle) {
 
         return workItemIdAlone;
     } catch (err) {
-        console.log("Couldn't obtain work item ID from PR title");
+        console.log("Couldn't obtain work item ID from PR Body Message, Please Defining Related WorkItem ID in PR Message: e.g: AB#12345");
         core.setFailed(err.toString());
     }
 }
-exports.getWorkItemIdFromPrTitle = getWorkItemIdFromPrTitle;
+exports.getWorkItemIdFromPrBody = getWorkItemIdFromPrBody;
 
 async function handleOpenedPr(workItemId) {
     let patchDocument = [
