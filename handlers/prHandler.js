@@ -7,6 +7,7 @@ const azureDevOpsHandler = require('./azureDevOpsHandler');
 async function getPrTitle() {
     try {
         const requestUrl = "https://api.github.com/repos/"+process.env.ghrepo_owner+"/"+process.env.ghrepo+"/pulls/"+process.env.pull_number;
+        console.log(process.env.pull_number)
         console.log(process.env.gh_token)
         console.log(requestUrl)
         const fetchResponse = await fetch(requestUrl, {
@@ -25,6 +26,7 @@ async function getPrTitle() {
 exports.getPrTitle = getPrTitle;
 
 function getWorkItemIdFromPrTitle(fullPrTitle) {
+    console.log("Full PR Title: " + fullPrTitle)
     try {
         var foundMatches = fullPrTitle.match(/AB#[(0-9)]*/g);
         var fullWorkItemId = foundMatches[0];
