@@ -25,8 +25,7 @@ async function getPrInfo() {
 }
 exports.getPrInfo = getPrInfo;
 
-function getWorkItemIdFromPrBody(fullPr) {
-    console.log("Full PR Title: " + fullPrTitle)
+function getWorkItemIdFromPrBody(fullPrTitle) {
     try {
         var foundMatches = fullPrTitle.match(/AB#[(0-9)]*/g);
         var fullWorkItemId = foundMatches[0];
