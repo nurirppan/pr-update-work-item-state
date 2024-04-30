@@ -5,17 +5,17 @@ name: Update work item state when PR is merged, opened, closed or when branch is
 
 on:
    pull_request:
-    branches: [master]
+    branches: [main]
     types: [opened, closed, edited]
    push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   alert:
     runs-on: ubuntu-latest
     name: Test workflow
     steps:       
-    - uses: RezaNum1/pr-update-work-item-state@master
+    - uses: RezaNum1/pr-update-work-item-state@main
       env: 
         gh_token : '${{ secrets.GH_TOKEN }}'   
         ado_token: '${{ secrets.ADO_PERSONAL_ACCESS_TOKEN }}'
@@ -24,8 +24,8 @@ jobs:
         closedstate: 'Done'
         propenstate: 'Ready'
         inprogressstate: 'In Progress' 
-        ghrepo_owner: 'Contoso'
-        ghrepo: 'Contoso-Microservice'
+        ghrepo_owner: 'RezaNum1'
+        ghrepo: 'X-Microservice'
         pull_number: ${{github.event.number}} 
         branch_name: ${{ github.ref }}
 

@@ -3,7 +3,7 @@ global.Headers = fetch.Headers;
 
 function getRequestHeaders(){
 	let h = new Headers();
-	let auth = 'token ' + process.env.gh_token;
+	let auth = 'Bearer ' + process.env.gh_token;
 	h.append('Authorization', auth);
 	return h;
 }
