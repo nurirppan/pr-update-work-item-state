@@ -7,7 +7,8 @@ const azureDevOpsHandler = require('./azureDevOpsHandler');
 async function getPrTitle() {
     try {
         const requestUrl = "https://api.github.com/repos/"+process.env.ghrepo_owner+"/"+process.env.ghrepo+"/pulls/"+process.env.pull_number;
-        
+        console.log(process.env.gh_token)
+        console.log(requestUrl)
         const fetchResponse = await fetch(requestUrl, {
             method: 'GET',
             headers: staticFunctions.getRequestHeaders()
