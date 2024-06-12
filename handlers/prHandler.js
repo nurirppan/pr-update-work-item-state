@@ -37,6 +37,20 @@ function getWorkItemIdFromPrBody(fullPrTitle) {
 }
 exports.getWorkItemIdFromPrBody = getWorkItemIdFromPrBody;
 
+function getTaskItemIdFromPrBody(fullPrTitle) {
+    try {
+        var foundMatches = fullPrTitle.match(/TASK#[(0-9)]*/g);
+        var fullWorkItemId = foundMatches[0];
+        var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
+
+        return workItemIdAlone;
+    } catch (err) {
+        console.log("Couldn't obtain work item ID from PR Body Message, Please Defining Related WorkItem ID in PR Message: e.g: TASK#12345");
+        core.setFailed(err.toString());
+    }
+}
+exports.getTaskItemIdFromPrBody = getTaskItemIdFromPrBody;
+
 async function handleOpenedPr(workItemId) {
     let patchDocument = [
         {

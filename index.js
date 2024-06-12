@@ -35,19 +35,23 @@ async function main(){
             }
 
             var workItemId = prHandler.getWorkItemIdFromPrBody(prBody);
+            var taskItemId = prHandler.getTaskItemIdFromPrBody(prBody);
 
             try {
                 if ((await prHandler.isPrOpen()) === true) {
                     console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.propenstate+" state");
                     await prHandler.handleOpenedPr(workItemId);
+                    await prHandler.handleOpenedPr(taskItemId);
                 }
                 else if ((await prHandler.isPrMerged()) === true) {
                     console.log("PR was merged, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
                     await prHandler.handleMergedPr(workItemId);
+                    await prHandler.handleMergedPr(taskItemId);
                 }
                 else if ((await prHandler.isPrClosed()) === true) {
                     console.log("PR was closed without merging, so moving AB#"+workItemId+" to "+process.env.inprogressstate+ " state");
                     await prHandler.handleClosedPr(workItemId);
+                    await prHandler.handleClosedPr(taskItemId);
                 }
             } catch (err) {
                 console.log("Couldn't update the work item");
@@ -74,11 +78,16 @@ async function main(){
             }
 
             var workItemId = branchHandler.getWorkItemIdFromPrBody(branchName);
+            var taskItemId = branchHandler.getTaskItemIdFromPrBody(branchName);
             
             try {
                 var updated = await branchHandler.handleOpenedBranch(workItemId);
+                var taskUpdate = await branchHandler.handleOpenedBranch(taskItemId);
                 if (updated !== true) {
                     console.log("Couldn't update the work item");
+                }
+                if (taskUpdate !== true) {
+                    console.log("Couldn't taskUpdate the work item");
                 }
             } catch (err) {
                 console.log("Couldn't update the work item");

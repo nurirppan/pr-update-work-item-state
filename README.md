@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test workflow
     steps:       
-    - uses: RezaNum1/pr-update-work-item-state@main
+    - uses: nurirppan/pr-update-work-item-state@main
       env: 
         gh_token : '${{ secrets.GH_TOKEN }}'   
         ado_token: '${{ secrets.ADO_PERSONAL_ACCESS_TOKEN }}'
@@ -24,7 +24,7 @@ jobs:
         closedstate: 'Done'
         propenstate: 'Ready'
         inprogressstate: 'In Progress' 
-        ghrepo_owner: 'RezaNum1'
+        ghrepo_owner: 'nurirppan'
         ghrepo: 'X-Microservice'
         pull_number: ${{github.event.number}} 
         branch_name: ${{ github.ref }}
