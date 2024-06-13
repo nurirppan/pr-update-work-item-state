@@ -29,6 +29,10 @@ function getWorkItemIdFromPrBody(fullPrTitle) {
         var fullWorkItemId = foundMatches[0];
         var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
 
+        console.log(foundMatches);
+        console.log(fullWorkItemId);
+        console.log(workItemIdAlone);
+
         return workItemIdAlone;
     } catch (err) {
         console.log("Couldn't obtain work item ID from PR Body Message, Please Defining Related WorkItem ID in PR Message: e.g: AB#12345");
@@ -43,6 +47,10 @@ function getTaskItemIdFromPrBody(fullPrTitle) {
         var fullWorkItemId = foundMatches[0];
         var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
 
+        console.log(foundMatches);
+        console.log(fullWorkItemId);
+        console.log(workItemIdAlone);
+        
         return workItemIdAlone;
     } catch (err) {
         console.log("Couldn't obtain work item ID from PR Body Message, Please Defining Related WorkItem ID in PR Message: e.g: TASK#12345");
