@@ -41,31 +41,33 @@ async function main(){
             var taskItemIds = prHandler.getTaskItemIdFromPrBody(prBody);
 
             try {
+                // hanya untuk testing agar cepat
+                // if ((await prHandler.isPrOpen()) === true) {
+                //     if (workItemIds && workItemIds.length > 0) {
+                //         for (const workItemId of workItemIds) {
+                //             try {
+                //                 console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
+                //                 await prHandler.handleMergedPr(workItemId);
+                //             } catch (err) {
+                //                 console.log(`Couldn't update the work item with AB# ${workItemId}`);
+                //                 core.setFailed(err.toString());
+                //             }
+                //         }
+                //     }
+                //     if (taskItemIds && taskItemIds.length > 0) {
+                //         for (const taskItemId of taskItemIds) {
+                //             try {
+                //                 console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
+                //                 await prHandler.handleTaskMergedPr(taskItemId);
+                //             } catch (err) {
+                //                 console.log(`Couldn't update the work item with TASK# ${taskItemId}`);
+                //                 core.setFailed(err.toString());
+                //             }
+                //         }
+                //     }
+                // }
+                // else 
                 if ((await prHandler.isPrOpen()) === true) {
-                    if (workItemIds && workItemIds.length > 0) {
-                        for (const workItemId of workItemIds) {
-                            try {
-                                console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
-                                await prHandler.handleMergedPr(workItemId);
-                            } catch (err) {
-                                console.log(`Couldn't update the work item with AB# ${workItemId}`);
-                                core.setFailed(err.toString());
-                            }
-                        }
-                    }
-                    if (taskItemIds && taskItemIds.length > 0) {
-                        for (const taskItemId of taskItemIds) {
-                            try {
-                                console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
-                                await prHandler.handleTaskMergedPr(taskItemId);
-                            } catch (err) {
-                                console.log(`Couldn't update the work item with TASK# ${taskItemId}`);
-                                core.setFailed(err.toString());
-                            }
-                        }
-                    }
-                }
-                else if ((await prHandler.isPrOpen()) === true) {
                     if (workItemIds && workItemIds.length > 0) {
                         for (const workItemId of workItemIds) {
                             try {
