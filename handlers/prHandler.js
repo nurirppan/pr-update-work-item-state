@@ -43,15 +43,19 @@ exports.getWorkItemIdFromPrBody = getWorkItemIdFromPrBody;
 
 function getTaskItemIdFromPrBody(fullPrTitle) {
     try {
-        var foundMatches = fullPrTitle.match(/TASK#[(0-9)]*/g);
-        var fullWorkItemId = foundMatches[0];
-        var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
+        var foundMatches = fullPrTitle.match(/TASK#[0-9]+/g);
+        if (foundMatches && foundMatches.length > 0) {
+            var fullWorkItemId = foundMatches[0];
+            var workItemIdAlone = fullWorkItemId.match(/[0-9]+/)[0];
 
-        console.log("foundMatches : " + foundMatches);
-        console.log("fullWorkItemId : " + fullWorkItemId);
-        console.log("workItemIdAlone : " + workItemIdAlone);
-        
-        return workItemIdAlone;
+            console.log("foundMatches : " + foundMatches);
+            console.log("fullWorkItemId : " + fullWorkItemId);
+            console.log("workItemIdAlone : " + workItemIdAlone);
+
+            return workItemIdAlone;
+        } else {
+            throw new Error("No TASK# found in the title");
+        }
     } catch (err) {
         console.log("Couldn't obtain work item ID from PR Body Message, Please Defining Related WorkItem ID in PR Message: e.g: TASK#12345");
         core.setFailed(err.toString());
