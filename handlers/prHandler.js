@@ -45,14 +45,14 @@ function getTaskItemIdFromPrBody(fullPrTitle) {
     try {
         var foundMatches = fullPrTitle.match(/TASK#[0-9]+/g);
         if (foundMatches && foundMatches.length > 0) {
-            var fullWorkItemId = foundMatches[0];
-            var workItemIdAlone = fullWorkItemId.match(/[0-9]+/)[0];
+            var fullTaskItemId = foundMatches[0];
+            var workTaskIdAlone = fullTaskItemId.match(/[0-9]+/)[0];
 
             console.log("foundMatches : " + foundMatches);
-            console.log("fullWorkItemId : " + fullWorkItemId);
-            console.log("workItemIdAlone : " + workItemIdAlone);
+            console.log("fullTaskItemId : " + fullTaskItemId);
+            console.log("workTaskIdAlone : " + workTaskIdAlone);
 
-            return workItemIdAlone;
+            return workTaskIdAlone;
         } else {
             throw new Error("No TASK# found in the title");
         }
