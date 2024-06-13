@@ -29,9 +29,9 @@ function getWorkItemIdFromPrBody(fullPrTitle) {
         var fullWorkItemId = foundMatches[0];
         var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
 
-        console.log(foundMatches);
-        console.log(fullWorkItemId);
-        console.log(workItemIdAlone);
+        console.log("foundMatches" + foundMatches);
+        console.log("fullWorkItemId" + fullWorkItemId);
+        console.log("workItemIdAlone" + workItemIdAlone);
 
         return workItemIdAlone;
     } catch (err) {
@@ -47,9 +47,9 @@ function getTaskItemIdFromPrBody(fullPrTitle) {
         var fullWorkItemId = foundMatches[0];
         var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
 
-        console.log(foundMatches);
-        console.log(fullWorkItemId);
-        console.log(workItemIdAlone);
+        console.log("foundMatches" + foundMatches);
+        console.log("fullWorkItemId" + fullWorkItemId);
+        console.log("workItemIdAlone" + workItemIdAlone);
         
         return workItemIdAlone;
     } catch (err) {

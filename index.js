@@ -21,6 +21,9 @@ async function main(){
 
             var [prName, prBody] = await prHandler.getPrInfo();
 
+            console.log("prName : " + prName);
+            console.log("prBody : " + prBody);
+            
             if (prName === undefined) {
                 console.log("Couldn't read PR name properly, ending checks");
                 return;
