@@ -23,7 +23,7 @@ async function main(){
 
             console.log("prName : " + prName);
             console.log("prBody : " + prBody);
-            
+
             if (prName === undefined) {
                 console.log("Couldn't read PR name properly, ending checks");
                 return;
@@ -37,33 +37,105 @@ async function main(){
                     return;
             }
 
-            var workItemId = prHandler.getWorkItemIdFromPrBody(prBody);
-            var taskItemId = prHandler.getTaskItemIdFromPrBody(prBody);
+            var workItemIds = prHandler.getWorkItemIdFromPrBody(prBody);
+            var taskItemIds = prHandler.getTaskItemIdFromPrBody(prBody);
 
             try {
                 if ((await prHandler.isPrOpen()) === true) {
-                    console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
-                    console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
-                    await prHandler.handleMergedPr(workItemId);
-                    await prHandler.handleTaskMergedPr(taskItemId);
+                    if (workItemIds && workItemIds.length > 0) {
+                        for (const workItemId of workItemIds) {
+                            try {
+                                console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
+                                await prHandler.handleMergedPr(workItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with AB# ${workItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
+                    if (taskItemIds && taskItemIds.length > 0) {
+                        for (const taskItemId of taskItemIds) {
+                            try {
+                                console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
+                                await prHandler.handleTaskMergedPr(taskItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with TASK# ${taskItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
                 }
                 else if ((await prHandler.isPrOpen()) === true) {
-                    console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.propenstate+" state");
-                    console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.propentaskstate+" state");
-                    await prHandler.handleOpenedPr(workItemId);
-                    await prHandler.handleTaskOpenedPr(taskItemId);
+                    if (workItemIds && workItemIds.length > 0) {
+                        for (const workItemId of workItemIds) {
+                            try {
+                                console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.propenstate+" state");
+                                await prHandler.handleOpenedPr(workItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with AB# ${workItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
+                    if (taskItemIds && taskItemIds.length > 0) {
+                        for (const taskItemId of taskItemIds) {
+                            try {
+                                console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.propentaskstate+" state");
+                                await prHandler.handleTaskOpenedPr(taskItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with TASK# ${taskItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
                 }
                 else if ((await prHandler.isPrMerged()) === true) {
-                    console.log("PR was merged, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
-                    console.log("PR was merged, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
-                    await prHandler.handleMergedPr(workItemId);
-                    await prHandler.handleTaskMergedPr(taskItemId);
+                    if (workItemIds && workItemIds.length > 0) {
+                        for (const workItemId of workItemIds) {
+                            try {
+                                console.log("PR was merged, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
+                                await prHandler.handleMergedPr(workItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with AB# ${workItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
+                    if (taskItemIds && taskItemIds.length > 0) {
+                        for (const taskItemId of taskItemIds) {
+                            try {
+                                console.log("PR was merged, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
+                                await prHandler.handleTaskMergedPr(taskItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with TASK# ${taskItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }                    
                 }
                 else if ((await prHandler.isPrClosed()) === true) {
-                    console.log("PR was closed without merging, so moving AB#"+workItemId+" to "+process.env.inprogressstate+ " state");
-                    console.log("PR was closed without merging, so moving TASK#"+taskItemId+" to "+process.env.inprogresstaskstate+ " state");
-                    await prHandler.handleClosedPr(workItemId);
-                    await prHandler.handleTaskClosedPr(taskItemId);
+                    if (workItemIds && workItemIds.length > 0) {
+                        for (const workItemId of workItemIds) {
+                            try {
+                                console.log("PR was closed without merging, so moving AB#"+workItemId+" to "+process.env.inprogressstate+ " state");
+                                await prHandler.handleClosedPr(workItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with AB# ${workItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
+                    if (taskItemIds && taskItemIds.length > 0) {
+                        for (const taskItemId of taskItemIds) {
+                            try {
+                                console.log("PR was closed without merging, so moving TASK#"+taskItemId+" to "+process.env.inprogresstaskstate+ " state");
+                                await prHandler.handleTaskClosedPr(taskItemId);
+                            } catch (err) {
+                                console.log(`Couldn't update the work item with TASK# ${taskItemId}`);
+                                core.setFailed(err.toString());
+                            }
+                        }
+                    }
                 }
             } catch (err) {
                 console.log("Couldn't update the work item");

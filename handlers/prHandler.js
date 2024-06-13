@@ -26,12 +26,13 @@ exports.getPrInfo = getPrInfo;
 function getWorkItemIdFromPrBody(fullPrTitle) {
     try {
         var foundMatches = fullPrTitle.match(/AB#[(0-9)]*/g);
-        var fullWorkItemId = foundMatches[0];
-        var workItemIdAlone = fullWorkItemId.match(/[0-9]*/g)[3];
+        if (!foundMatches) {
+            throw new Error("No AB# found in the title");
+        }
+        var workItemIds = foundMatches.map(match => match.match(/[0-9]+/)[0]);
 
-        console.log("foundMatches : " + foundMatches);
-        console.log("fullWorkItemId : " + fullWorkItemId);
-        console.log("workItemIdAlone : " + workItemIdAlone);
+        console.log("foundMatches AB : " + foundMatches);
+        console.log("workItemIds AB : " + workItemIds);
 
         return workItemIdAlone;
     } catch (err) {
@@ -43,19 +44,16 @@ exports.getWorkItemIdFromPrBody = getWorkItemIdFromPrBody;
 
 function getTaskItemIdFromPrBody(fullPrTitle) {
     try {
-        var foundMatches = fullPrTitle.match(/TASK#[0-9]+/g);
-        if (foundMatches && foundMatches.length > 0) {
-            var fullTaskItemId = foundMatches[0];
-            var workTaskIdAlone = fullTaskItemId.match(/[0-9]+/)[0];
-
-            console.log("foundMatches : " + foundMatches);
-            console.log("fullTaskItemId : " + fullTaskItemId);
-            console.log("workTaskIdAlone : " + workTaskIdAlone);
-
-            return workTaskIdAlone;
-        } else {
+        var foundMatches = fullPrTitle.match(/TASK#[0-9]*/g);
+        if (!foundMatches) {
             throw new Error("No TASK# found in the title");
         }
+        var workItemIds = foundMatches.map(match => match.match(/[0-9]+/)[0]);
+
+        console.log("foundMatches TASK : " + foundMatches);
+        console.log("workItemIds TASK : " + workItemIds);
+
+        return workItemIdAlone;
     } catch (err) {
         console.log("Couldn't obtain work item ID from PR Body Message, Please Defining Related WorkItem ID in PR Message: e.g: TASK#12345");
         core.setFailed(err.toString());
