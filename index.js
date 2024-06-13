@@ -42,25 +42,25 @@ async function main(){
                     console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
                     console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
                     await prHandler.handleMergedPr(workItemId);
-                    await prHandler.handleMergedPr(taskItemId);
+                    await prHandler.handleTaskMergedPr(taskItemId);
                 }
                 else if ((await prHandler.isPrOpen()) === true) {
                     console.log("PR was opened, so moving AB#"+workItemId+" to "+process.env.propenstate+" state");
                     console.log("PR was opened, so moving TASK#"+taskItemId+" to "+process.env.propentaskstate+" state");
                     await prHandler.handleOpenedPr(workItemId);
-                    await prHandler.handleOpenedPr(taskItemId);
+                    await prHandler.handleTaskOpenedPr(taskItemId);
                 }
                 else if ((await prHandler.isPrMerged()) === true) {
                     console.log("PR was merged, so moving AB#"+workItemId+" to "+process.env.closedstate+" state");
                     console.log("PR was merged, so moving TASK#"+taskItemId+" to "+process.env.closedtaskstate+" state");
                     await prHandler.handleMergedPr(workItemId);
-                    await prHandler.handleMergedPr(taskItemId);
+                    await prHandler.handleTaskMergedPr(taskItemId);
                 }
                 else if ((await prHandler.isPrClosed()) === true) {
                     console.log("PR was closed without merging, so moving AB#"+workItemId+" to "+process.env.inprogressstate+ " state");
                     console.log("PR was closed without merging, so moving TASK#"+taskItemId+" to "+process.env.inprogresstaskstate+ " state");
                     await prHandler.handleClosedPr(workItemId);
-                    await prHandler.handleClosedPr(taskItemId);
+                    await prHandler.handleTaskClosedPr(taskItemId);
                 }
             } catch (err) {
                 console.log("Couldn't update the work item");

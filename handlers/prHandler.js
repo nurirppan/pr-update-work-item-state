@@ -59,6 +59,7 @@ function getTaskItemIdFromPrBody(fullPrTitle) {
 }
 exports.getTaskItemIdFromPrBody = getTaskItemIdFromPrBody;
 
+// ------------------------------------------------------
 async function handleOpenedPr(workItemId) {
     let patchDocument = [
         {
@@ -73,6 +74,23 @@ async function handleOpenedPr(workItemId) {
 }
 exports.handleOpenedPr = handleOpenedPr;
 
+async function handleTaskOpenedPr(taskItemId) {
+    let patchDocument = [
+        {
+            op: "add",
+            path: "/fields/System.State",
+            value: process.env.propentaskstate
+        }
+    ];
+
+    await azureDevOpsHandler.updateWorkItem(patchDocument, taskItemId);
+    return true;
+}
+exports.handleTaskOpenedPr = handleTaskOpenedPr;
+// ------------------------------------------------------
+
+
+// ------------------------------------------------------
 async function handleMergedPr(workItemId) {
     let patchDocument = [
         {
@@ -87,6 +105,23 @@ async function handleMergedPr(workItemId) {
 }
 exports.handleMergedPr = handleMergedPr;
 
+async function handleTaskMergedPr(taskItemId) {
+    let patchDocument = [
+        {
+            op: "add",
+            path: "/fields/System.State",
+            value: process.env.closedtaskstate
+        }
+    ];
+
+    await azureDevOpsHandler.updateWorkItem(patchDocument, taskItemId);
+    return true;
+}
+exports.handleTaskMergedPr = handleTaskMergedPr;
+// ------------------------------------------------------
+
+
+// ------------------------------------------------------
 async function handleClosedPr(workItemId) {
     let patchDocument = [
         {
@@ -100,6 +135,21 @@ async function handleClosedPr(workItemId) {
     return true;
 }
 exports.handleClosedPr = handleClosedPr;
+
+async function handleTaskClosedPr(taskItemId) {
+    let patchDocument = [
+        {
+            op: "add",
+            path: "/fields/System.State",
+            value: process.env.inprogresstaskstate
+        }
+    ];
+
+    await azureDevOpsHandler.updateWorkItem(patchDocument, taskItemId);
+    return true;
+}
+exports.handleTaskClosedPr = handleTaskClosedPr;
+// ------------------------------------------------------
 
 async function isPrOpen(pullRequestNumber) {
     var pullRequestStatus = await getPrState(pullRequestNumber);

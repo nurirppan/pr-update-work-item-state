@@ -24,7 +24,7 @@ function getValuesFromPayload(payload) {
             propenstate: process.env.propenstate != undefined ? process.env.propenstate :"",
             inprogressstate: process.env.inprogressstate != undefined ? process.env.inprogressstate :"",
             closedtaskstate: process.env.closedtaskstate != undefined ? process.env.closedtaskstate :"",
-            propentaskstate: process.env.propentaskstate != undefined ? process.env.propenstate :"",
+            propentaskstate: process.env.propentaskstate != undefined ? process.env.propentaskstate :"",
             inprogresstaskstate: process.env.inprogresstaskstate != undefined ? process.env.inprogresstaskstate :"",
             branch_name: process.env.branch_name != undefined ? process.env.branch_name :"",
 	        gh_token: process.env.gh_token != undefined ? process.env.gh_token :""
